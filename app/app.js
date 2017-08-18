@@ -82,29 +82,20 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
-const render = () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <Router
-        history={history}
-        routes={rootRoute}
-        render={
-          // Scroll to top when going to a new page, imitating default browser
-          // behaviour
-          applyRouterMiddleware(useScroll())
-        }
-      />
-    </Provider>,
-    document.getElementById('app')
-  );
-};
-
-// Hot reloadable translation json files
-if (module.hot) {
-  // modules.hot.accept does not accept dynamic dependencies,
-  // have to be constants at compile-time
-  render();
-}
+ReactDOM.render(
+  <Provider store={store}>
+    <Router
+      history={history}
+      routes={rootRoute}
+      render={
+        // Scroll to top when going to a new page, imitating default browser
+        // behaviour
+        applyRouterMiddleware(useScroll())
+      }
+    />
+  </Provider>,
+  document.getElementById('app')
+);
 
 // Install ServiceWorker and AppCache in the end since
 // it's not most important operation and if main code fails,
