@@ -12,9 +12,19 @@
 import React from 'react';
 import { Grid, List, Button, Table } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
+import {
+  fetchItemList,
+  fetchCategoryList,
+} from './actions';
+import { connect } from 'react-redux';
 
 
-export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  componentDidMount() {
+    this.props.fetchItemList();
+    this.props.fetchCategoryList();
+  }
+
   render() {
     return (
       <Grid padded>
@@ -22,7 +32,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
           <h1>My app</h1>
           <List relaxed>
             <List.Item>
-              <List.Icon name='users' />
+              <List.Icon name="users" />
               <List.Content>Category 1</List.Content>
             </List.Item>
             <List.Item>Category 2</List.Item>
@@ -53,3 +63,21 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
     );
   }
 }
+
+
+const mapStateToProps = (state) => {
+  const home = state.get('home');
+
+  return {
+    items: home.get('items'),
+    categories: home.get('categories'),
+  };
+};
+
+
+const mapDispatchToProps = {
+  fetchItemList,
+  fetchCategoryList,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
