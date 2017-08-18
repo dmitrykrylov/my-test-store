@@ -5,10 +5,10 @@ module.exports = () => {
   const routes = new Router();
 
   routes
-    .get('/', controllers.getItemList)
-    .post('/', controllers.createItem)
-    .put('/', controllers.updateItem)
-    .delete('/', controllers.deleteItem);
+    .get('/', controllers.getCategoryList)
+    .post('/', controllers.createCategory)
+    .put('/', controllers.updateCategory)
+    .delete('/', controllers.deleteCategory);
 
   return routes;
 };
