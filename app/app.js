@@ -21,12 +21,6 @@ import 'sanitize.css/sanitize.css';
 // Import root app
 import App from 'containers/App';
 
-// Import selector for `syncHistoryWithStore`
-import { makeSelectLocationState } from 'containers/App/selectors';
-
-// Import Language Provider
-import LanguageProvider from 'containers/LanguageProvider';
-
 // Load the favicon, the manifest.json file and the .htaccess file
 /* eslint-disable import/no-webpack-loader-syntax */
 import '!file-loader?name=[name].[ext]!./favicon.ico';
@@ -35,9 +29,6 @@ import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line impor
 /* eslint-enable import/no-webpack-loader-syntax */
 
 import configureStore from './store';
-
-// Import i18n messages
-import { translationMessages } from './i18n';
 
 // Import CSS reset and Global Styles
 import './global-styles';
@@ -66,6 +57,21 @@ const store = configureStore(initialState, browserHistory);
 // Sync history and store, as the react-router-redux reducer
 // is under the non-default key ("routing"), selectLocationState
 // must be provided for resolving how to retrieve the "route" in the state
+const makeSelectLocationState = () => {
+  let prevRoutingState;
+  let prevRoutingStateJS;
+
+  return (state) => {
+    const routingState = state.get('route'); // or state.route
+
+    if (!routingState.equals(prevRoutingState)) {
+      prevRoutingState = routingState;
+      prevRoutingStateJS = routingState.toJS();
+    }
+
+    return prevRoutingStateJS;
+  };
+};
 const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: makeSelectLocationState(),
 });
@@ -76,20 +82,18 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
-const render = (messages) => {
+const render = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <Router
-          history={history}
-          routes={rootRoute}
-          render={
-            // Scroll to top when going to a new page, imitating default browser
-            // behaviour
-            applyRouterMiddleware(useScroll())
-          }
-        />
-      </LanguageProvider>
+      <Router
+        history={history}
+        routes={rootRoute}
+        render={
+          // Scroll to top when going to a new page, imitating default browser
+          // behaviour
+          applyRouterMiddleware(useScroll())
+        }
+      />
     </Provider>,
     document.getElementById('app')
   );
@@ -99,26 +103,7 @@ const render = (messages) => {
 if (module.hot) {
   // modules.hot.accept does not accept dynamic dependencies,
   // have to be constants at compile-time
-  module.hot.accept('./i18n', () => {
-    render(translationMessages);
-  });
-}
-
-// Chunked polyfill for browsers without Intl support
-if (!window.Intl) {
-  (new Promise((resolve) => {
-    resolve(import('intl'));
-  }))
-    .then(() => Promise.all([
-      import('intl/locale-data/jsonp/en.js'),
-      import('intl/locale-data/jsonp/de.js'),
-    ]))
-    .then(() => render(translationMessages))
-    .catch((err) => {
-      throw err;
-    });
-} else {
-  render(translationMessages);
+  render();
 }
 
 // Install ServiceWorker and AppCache in the end since
