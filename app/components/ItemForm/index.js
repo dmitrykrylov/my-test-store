@@ -58,7 +58,7 @@ const CategoryForm = (props) => {
           min="0"
         />
       </Form.Field>
-      <Button type="submit">Сохранить</Button>
+      <Button type="submit" primary>Сохранить</Button>
     </Form>
   );
 };

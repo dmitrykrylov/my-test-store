@@ -58,10 +58,10 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={10}>
-            <Button onClick={this.props.openNewItemModal}>
+            <Button color="green" basic onClick={this.props.openNewItemModal}>
               Добавить товар
             </Button>
-            <Button onClick={this.props.openNewCategoryModal}>
+            <Button color="green" basic onClick={this.props.openNewCategoryModal}>
               Добавить категорию
             </Button>
             <Table
@@ -115,10 +115,10 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
         >
           <Header>Точно удалить товар id{itemToDelete}?</Header>
           <Modal.Actions>
-            <Button color="red" inverted onClick={() => this.props.deleteItem(itemToDelete)}>
+            <Button color="red" basic onClick={() => this.props.deleteItem(itemToDelete)}>
               Да
             </Button>
-            <Button color="green" inverted onClick={this.props.closeModal}>
+            <Button color="green" basic onClick={this.props.closeModal}>
               Нет
             </Button>
           </Modal.Actions>
@@ -134,10 +134,10 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
             Все товары этой категории будут помечены "Без категории"
           </Modal.Content>
           <Modal.Actions>
-            <Button color="red" inverted onClick={() => this.props.deleteCategory(categoryToDelete)}>
+            <Button color="red" basic onClick={() => this.props.deleteCategory(categoryToDelete)}>
               Да
             </Button>
-            <Button color="green" inverted onClick={this.props.closeModal}>
+            <Button color="green" basic onClick={this.props.closeModal}>
               Нет
             </Button>
           </Modal.Actions>

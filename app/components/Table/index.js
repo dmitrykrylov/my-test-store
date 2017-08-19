@@ -25,10 +25,10 @@ const ItemTable = (props) => {
               <Table.Cell>{item.purchasePrice}</Table.Cell>
               <Table.Cell>{item.sellingPrice}</Table.Cell>
               <Table.Cell>
-                <Button onClick={() => openDeleteItemModal(item._id)}>
+                <Button color="grey" basic onClick={() => openDeleteItemModal(item._id)}>
                   Удалить
                 </Button>
-                <Button onClick={() => openItemModal(item._id)}>
+                <Button color="green" basic onClick={() => openItemModal(item._id)}>
                   Изменить
                 </Button>
               </Table.Cell>
