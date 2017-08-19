@@ -60,7 +60,7 @@ function* fetchItemList() {
 
 function* fetchItem(action) {
   try {
-    const response = yield call(axios.get, `/api/items/${action.id}`);
+    const response = yield call(axios.get, `/api/items/${action.payload}`);
     yield put({ type: FETCH_ITEM_SUCCESS, payload: response.data });
   } catch (error) {
     yield put({ type: FETCH_ITEM_FAILURE, error: error.message });
@@ -80,7 +80,7 @@ function* updateItem(action) {
 
 function* deleteItem(action) {
   try {
-    const response = yield call(axios.delete, `/api/items/${action.id}`);
+    const response = yield call(axios.delete, `/api/items/${action.payload}`);
     yield put({ type: DELETE_ITEM_SUCCESS, payload: response.data });
   } catch (error) {
     yield put({ type: DELETE_ITEM_FAILURE, error: error.message });
@@ -92,6 +92,7 @@ function* createCategory(action) {
   try {
     yield call(axios.post, '/api/categories', action.payload);
     yield put({ type: CREATE_CATEGORY_SUCCESS });
+    yield put({ type: FETCH_CATEGORY_LIST_REQUEST });
   } catch (error) {
     yield put({ type: CREATE_CATEGORY_FAILURE, error: error.message });
   }
@@ -130,8 +131,9 @@ function* updateCategory(action) {
 
 function* deleteCategory(action) {
   try {
-    const response = yield call(axios.delete, `/api/categories/${action.id}`);
+    const response = yield call(axios.delete, `/api/categories/${action.payload}`);
     yield put({ type: DELETE_CATEGORY_SUCCESS, payload: response.data });
+    yield put({ type: FETCH_CATEGORY_LIST_REQUEST });
   } catch (error) {
     yield put({ type: DELETE_CATEGORY_FAILURE, error: error.message });
   }

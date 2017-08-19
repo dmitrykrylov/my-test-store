@@ -7,8 +7,8 @@ module.exports = () => {
   routes
     .get('/', controllers.getCategoryList)
     .post('/', controllers.createCategory)
-    .put('/', controllers.updateCategory)
-    .delete('/', controllers.deleteCategory);
+    .put('/:id', controllers.updateCategory)
+    .delete('/:id', controllers.deleteCategory);
 
   return routes;
 };

@@ -7,8 +7,8 @@ module.exports = () => {
   routes
     .get('/', controllers.getItemList)
     .post('/', controllers.createItem)
-    .put('/', controllers.updateItem)
-    .delete('/', controllers.deleteItem);
+    .put('/:id', controllers.updateItem)
+    .delete('/:id', controllers.deleteItem);
 
   return routes;
 };

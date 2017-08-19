@@ -23,11 +23,9 @@ exports.getItem = async (req, res, next) => {
 
 exports.createItem = async (req, res, next) => {
   try {
-    const item = new Item(req.body);
-    await item.save();
-    res
-      .status(201)
-      .json(item);
+    console.log('fff', req.body);
+    const item = await Item.create(req.body);
+    res.status(201).json(item);
   } catch (e) {
     next(e);
   }
@@ -46,7 +44,7 @@ exports.updateItem = async (req, res, next) => {
 
 exports.deleteItem = async (req, res, next) => {
   try {
-    await Item.findByIdAndRemove(req.body.id);
+    await Item.findByIdAndRemove(req.params.id);
     res.sendStatus(204);
   } catch (e) {
     next(e);

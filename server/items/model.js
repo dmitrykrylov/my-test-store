@@ -5,9 +5,18 @@ const autoIncrement = require('mongoose-auto-increment');
 
 const ItemSchema = new mongoose.Schema({
   id: Number,
-  title: String,
-  purchasePrice: Number,
-  sellingPrice: Number,
+  name: {
+    type: String,
+    required: true,
+  },
+  purchasePrice: {
+    type: Number,
+    required: true,
+  },
+  sellingPrice: {
+    type: Number,
+    required: true,
+  },
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',

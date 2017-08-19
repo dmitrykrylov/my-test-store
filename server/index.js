@@ -11,12 +11,15 @@ const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngr
 const resolve = require('path').resolve;
 const app = express();
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('./routes')(app));
 
 // In production we need to pass these values in instead of relying on webpack

@@ -23,8 +23,8 @@ exports.getCategory = async (req, res, next) => {
 
 exports.createCategory = async (req, res, next) => {
   try {
-    const category = new Category(req.body);
-    await category.save();
+    console.log('eee', req.body);
+    const category = await Category.create(req.body);
     res.status(201).json(category);
   } catch (e) {
     next(e);
@@ -44,7 +44,7 @@ exports.updateCategory = async (req, res, next) => {
 
 exports.deleteCategory = async (req, res, next) => {
   try {
-    await Category.findByIdAndRemove(req.body.id);
+    await Category.findByIdAndRemove(req.params.id);
     res.sendStatus(204);
   } catch (e) {
     next(e);
