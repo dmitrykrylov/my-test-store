@@ -7,9 +7,6 @@ import {
   FETCH_ITEM_LIST_REQUEST,
   FETCH_ITEM_LIST_SUCCESS,
   FETCH_ITEM_LIST_FAILURE,
-  FETCH_ITEM_REQUEST,
-  FETCH_ITEM_SUCCESS,
-  FETCH_ITEM_FAILURE,
   UPDATE_ITEM_REQUEST,
   UPDATE_ITEM_SUCCESS,
   UPDATE_ITEM_FAILURE,
@@ -23,9 +20,6 @@ import {
   FETCH_CATEGORY_LIST_REQUEST,
   FETCH_CATEGORY_LIST_SUCCESS,
   FETCH_CATEGORY_LIST_FAILURE,
-  FETCH_CATEGORY_REQUEST,
-  FETCH_CATEGORY_SUCCESS,
-  FETCH_CATEGORY_FAILURE,
   UPDATE_CATEGORY_REQUEST,
   UPDATE_CATEGORY_SUCCESS,
   UPDATE_CATEGORY_FAILURE,
@@ -58,16 +52,6 @@ function* fetchItemList() {
     yield put({ type: FETCH_ITEM_LIST_SUCCESS, payload: response.data });
   } catch (error) {
     yield put({ type: FETCH_ITEM_LIST_FAILURE, error: error.message });
-  }
-}
-
-
-function* fetchItem(action) {
-  try {
-    const response = yield call(axios.get, `/api/items/${action.payload}`);
-    yield put({ type: FETCH_ITEM_SUCCESS, payload: response.data });
-  } catch (error) {
-    yield put({ type: FETCH_ITEM_FAILURE, error: error.message });
   }
 }
 
@@ -118,16 +102,6 @@ function* fetchCategoryList() {
 }
 
 
-function* fetchCategory(action) {
-  try {
-    const response = yield call(axios.get, `/api/categories/${action.id}`);
-    yield put({ type: FETCH_CATEGORY_SUCCESS, payload: response.data });
-  } catch (error) {
-    yield put({ type: FETCH_CATEGORY_FAILURE, error: error.message });
-  }
-}
-
-
 function* updateCategory(action) {
   try {
     const response = yield call(axios.put, `/api/categories/${action.payload._id}`, action.payload);
@@ -144,6 +118,7 @@ function* deleteCategory(action) {
     yield put({ type: DELETE_CATEGORY_SUCCESS, payload: response.data });
     yield put({ type: CLOSE_MODAL });
     yield put({ type: FETCH_CATEGORY_LIST_REQUEST });
+    yield put({ type: FETCH_ITEM_LIST_REQUEST });
   } catch (error) {
     yield put({ type: DELETE_CATEGORY_FAILURE, error: error.message });
   }
@@ -157,11 +132,6 @@ function* createItemSaga() {
 }
 function* fetchItemListSaga() {
   const watcher = yield fork(takeLatest, FETCH_ITEM_LIST_REQUEST, fetchItemList);
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
-}
-function* fetchItemSaga() {
-  const watcher = yield fork(takeLatest, FETCH_ITEM_REQUEST, fetchItem);
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);
 }
@@ -185,11 +155,6 @@ function* fetchCategoryListSaga() {
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);
 }
-function* fetchCategorySaga() {
-  const watcher = yield fork(takeLatest, FETCH_CATEGORY_REQUEST, fetchCategory);
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
-}
 function* updateCategorySaga() {
   const watcher = yield fork(takeLatest, UPDATE_CATEGORY_REQUEST, updateCategory);
   yield take(LOCATION_CHANGE);
@@ -205,12 +170,10 @@ function* deleteCategorySaga() {
 export default [
   createItemSaga,
   fetchItemListSaga,
-  fetchItemSaga,
   updateItemSaga,
   deleteItemSaga,
   createCategorySaga,
   fetchCategoryListSaga,
-  fetchCategorySaga,
   updateCategorySaga,
   deleteCategorySaga,
 ];

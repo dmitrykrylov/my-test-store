@@ -9,14 +9,15 @@
  * the linting exception.
  */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Grid, List, Button, Header, Modal } from 'semantic-ui-react';
+import { Grid, Button, Header, Modal } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
+import Table from 'components/Table';
+import CategoryList from 'components/CategoryList';
 import NewCategoryForm from './NewCategoryForm';
 import NewItemForm from './NewItemForm';
 import ItemForm from './ItemForm';
-import Table from 'components/Table'
 import {
   fetchItemList,
   createItem,
@@ -31,6 +32,7 @@ import {
   openNewCategoryModal,
   openDeleteCategoryModal,
   closeModal,
+  setActiveCategory,
 } from './actions';
 
 
@@ -41,34 +43,21 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
   }
 
   render() {
-    const { categories, items, itemToDelete, itemToEdit, categoryToDelete } = this.props;
+    const { categories, items, itemToDelete, itemToEdit, categoryToDelete, activeCategory } = this.props;
 
     return (
       <div>
-        <Grid padded>
-          <Grid.Column width={5}>
+        <Grid padded centered>
+          <Grid.Column width={4}>
             <Header>My app</Header>
-            <List relaxed>
-              {
-                categories.map((category, index) => (
-                  <List.Item key={index}>
-                    <List.Icon
-                      name="remove"
-                      color="grey"
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => {this.props.openDeleteCategoryModal(category._id)}}
-                    />
-                    <List.Content>{category.name}</List.Content>
-                  </List.Item>
-                ))
-              }
-              <List.Item>
-                <List.Icon />
-                <List.Content>Без категории</List.Content>
-              </List.Item>
-            </List>
+            <CategoryList
+              categories={categories}
+              activeCategory={activeCategory}
+              setActiveCategory={this.props.setActiveCategory}
+              openDeleteCategoryModal={this.props.openDeleteCategoryModal}
+            />
           </Grid.Column>
-          <Grid.Column width={11}>
+          <Grid.Column width={10}>
             <Button onClick={this.props.openNewItemModal}>
               Добавить товар
             </Button>
@@ -76,7 +65,10 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
               Добавить категорию
             </Button>
             <Table
-              items={items}
+              items={items.filter((item) => activeCategory ?
+                item.category === activeCategory :
+                !item.category
+              )}
               openItemModal={this.props.openItemModal}
               openDeleteItemModal={this.props.openDeleteItemModal}
             />
@@ -121,7 +113,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
           open={this.props.deleteItemModalOpen}
           onClose={this.props.closeModal}
         >
-          <Header>Точно удалить товар?</Header>
+          <Header>Точно удалить товар id{itemToDelete}?</Header>
           <Modal.Actions>
             <Button color="red" inverted onClick={() => this.props.deleteItem(itemToDelete)}>
               Да
@@ -156,6 +148,24 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
 }
 
 
+HomePage.propTypes = {
+  fetchItemList: PropTypes.func,
+  createItem: PropTypes.func,
+  updateItem: PropTypes.func,
+  deleteItem: PropTypes.func,
+  fetchCategoryList: PropTypes.func,
+  createCategory: PropTypes.func,
+  deleteCategory: PropTypes.func,
+  openNewItemModal: PropTypes.func,
+  openItemModal: PropTypes.func,
+  openNewCategoryModal: PropTypes.func,
+  openDeleteItemModal: PropTypes.func,
+  openDeleteCategoryModal: PropTypes.func,
+  closeModal: PropTypes.func,
+  setActiveCategory: PropTypes.func,
+};
+
+
 const mapStateToProps = (state) => {
   const home = state.get('home');
 
@@ -170,6 +180,7 @@ const mapStateToProps = (state) => {
     itemToEdit: home.get('itemToEdit'),
     itemToDelete: home.get('itemToDelete'),
     categoryToDelete: home.get('categoryToDelete'),
+    activeCategory: home.get('activeCategory'),
   };
 };
 
@@ -188,6 +199,7 @@ const mapDispatchToProps = {
   openDeleteItemModal,
   openDeleteCategoryModal,
   closeModal,
+  setActiveCategory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

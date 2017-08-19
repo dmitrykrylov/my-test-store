@@ -5,9 +5,10 @@ import { Field } from 'redux-form/immutable';
 
 const renderSelectField = (props) => (
   <Select
-    value={props.value}
+    value={props.input.value}
     options={props.options}
     placeholder={props.placeholder}
+    onChange={(event, data) => props.input.onChange(data.value)}
   />
 );
 

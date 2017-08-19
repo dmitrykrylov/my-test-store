@@ -17,6 +17,8 @@ import {
   OPEN_NEW_CATEGORY_MODAL,
   OPEN_DELETE_CATEGORY_MODAL,
   CLOSE_MODAL,
+
+  SET_ACTIVE_CATEGORY,
 } from './constants';
 
 
@@ -53,3 +55,5 @@ export const openNewCategoryModal = () => ({ type: OPEN_NEW_CATEGORY_MODAL });
 export const openDeleteCategoryModal = (payload) => ({ type: OPEN_DELETE_CATEGORY_MODAL, payload });
 
 export const closeModal = () => ({ type: CLOSE_MODAL });
+
+export const setActiveCategory = (payload) => ({ type: SET_ACTIVE_CATEGORY, payload });
