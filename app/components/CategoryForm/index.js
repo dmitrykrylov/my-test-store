@@ -10,7 +10,7 @@ const CategoryForm = (props) => {
       <Form.Field>
         <Field name="name" placeholder="Название" component="input" required />
       </Form.Field>
-      <Button type="submit">Submit</Button>
+      <Button type="submit">Сохранить</Button>
     </Form>
   );
 };

@@ -12,38 +12,44 @@ import {
   DELETE_CATEGORY_REQUEST,
 
   OPEN_NEW_ITEM_MODAL,
-  OPEN_NEW_CATEGORY_MODAL,
+  OPEN_DELETE_ITEM_MODAL,
   OPEN_ITEM_MODAL,
+  OPEN_NEW_CATEGORY_MODAL,
+  OPEN_DELETE_CATEGORY_MODAL,
   CLOSE_MODAL,
 } from './constants';
 
 
-export const createItem = (params) => ({ type: CREATE_ITEM_REQUEST, payload: params });
+export const createItem = (payload) => ({ type: CREATE_ITEM_REQUEST, payload });
 
-export const fetchItem = (params) => ({ type: FETCH_ITEM_REQUEST, payload: params });
+export const fetchItem = (payload) => ({ type: FETCH_ITEM_REQUEST, payload });
 
 export const fetchItemList = () => ({ type: FETCH_ITEM_LIST_REQUEST });
 
-export const updateItem = (params) => ({ type: UPDATE_ITEM_REQUEST, payload: params });
+export const updateItem = (payload) => ({ type: UPDATE_ITEM_REQUEST, payload });
 
-export const deleteItem = (params) => ({ type: DELETE_ITEM_REQUEST, payload: params });
+export const deleteItem = (payload) => ({ type: DELETE_ITEM_REQUEST, payload });
 
 
-export const createCategory = (params) => ({ type: CREATE_CATEGORY_REQUEST, payload: params });
+export const createCategory = (payload) => ({ type: CREATE_CATEGORY_REQUEST, payload });
 
-export const fetchCategory = (params) => ({ type: FETCH_CATEGORY_REQUEST, payload: params });
+export const fetchCategory = (payload) => ({ type: FETCH_CATEGORY_REQUEST, payload });
 
 export const fetchCategoryList = () => ({ type: FETCH_CATEGORY_LIST_REQUEST });
 
-export const updateCategory = (params) => ({ type: UPDATE_CATEGORY_REQUEST, payload: params });
+export const updateCategory = (payload) => ({ type: UPDATE_CATEGORY_REQUEST, payload });
 
-export const deleteCategory = (params) => ({ type: DELETE_CATEGORY_REQUEST, payload: params });
+export const deleteCategory = (payload) => ({ type: DELETE_CATEGORY_REQUEST, payload });
 
 
 export const openNewItemModal = () => ({ type: OPEN_NEW_ITEM_MODAL });
 
-export const openItemModal = () => ({ type: OPEN_ITEM_MODAL });
+export const openItemModal = (payload) => ({ type: OPEN_ITEM_MODAL, payload });
+
+export const openDeleteItemModal = (payload) => ({ type: OPEN_DELETE_ITEM_MODAL, payload });
 
 export const openNewCategoryModal = () => ({ type: OPEN_NEW_CATEGORY_MODAL });
+
+export const openDeleteCategoryModal = (payload) => ({ type: OPEN_DELETE_CATEGORY_MODAL, payload });
 
 export const closeModal = () => ({ type: CLOSE_MODAL });

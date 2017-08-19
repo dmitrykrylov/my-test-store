@@ -32,6 +32,8 @@ import {
   DELETE_CATEGORY_REQUEST,
   DELETE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_FAILURE,
+
+  CLOSE_MODAL,
 } from './constants';
 
 
@@ -42,6 +44,8 @@ function* createItem(action) {
   try {
     yield call(axios.post, '/api/items', action.payload);
     yield put({ type: CREATE_ITEM_SUCCESS });
+    yield put({ type: CLOSE_MODAL });
+    yield put({ type: FETCH_ITEM_LIST_REQUEST });
   } catch (error) {
     yield put({ type: CREATE_ITEM_FAILURE, error: error.message });
   }
@@ -70,8 +74,10 @@ function* fetchItem(action) {
 
 function* updateItem(action) {
   try {
-    const response = yield call(axios.put, `/api/items/${action.payload._id}`, action.payload);
+    const response = yield call(axios.put, `/api/items/${action.payload.get('_id')}`, action.payload);
     yield put({ type: UPDATE_ITEM_SUCCESS, categoryList: response.data });
+    yield put({ type: CLOSE_MODAL });
+    yield put({ type: FETCH_ITEM_LIST_REQUEST });
   } catch (error) {
     yield put({ type: UPDATE_ITEM_FAILURE, error: error.message });
   }
@@ -82,6 +88,8 @@ function* deleteItem(action) {
   try {
     const response = yield call(axios.delete, `/api/items/${action.payload}`);
     yield put({ type: DELETE_ITEM_SUCCESS, payload: response.data });
+    yield put({ type: CLOSE_MODAL });
+    yield put({ type: FETCH_ITEM_LIST_REQUEST });
   } catch (error) {
     yield put({ type: DELETE_ITEM_FAILURE, error: error.message });
   }
@@ -92,6 +100,7 @@ function* createCategory(action) {
   try {
     yield call(axios.post, '/api/categories', action.payload);
     yield put({ type: CREATE_CATEGORY_SUCCESS });
+    yield put({ type: CLOSE_MODAL });
     yield put({ type: FETCH_CATEGORY_LIST_REQUEST });
   } catch (error) {
     yield put({ type: CREATE_CATEGORY_FAILURE, error: error.message });
@@ -133,6 +142,7 @@ function* deleteCategory(action) {
   try {
     const response = yield call(axios.delete, `/api/categories/${action.payload}`);
     yield put({ type: DELETE_CATEGORY_SUCCESS, payload: response.data });
+    yield put({ type: CLOSE_MODAL });
     yield put({ type: FETCH_CATEGORY_LIST_REQUEST });
   } catch (error) {
     yield put({ type: DELETE_CATEGORY_FAILURE, error: error.message });

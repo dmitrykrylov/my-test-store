@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const autoIncrement = require('mongoose-auto-increment');
 
+autoIncrement.initialize(mongoose.connection);
 
 const ItemSchema = new mongoose.Schema({
-  id: Number,
   name: {
     type: String,
     required: true,
@@ -24,8 +24,7 @@ const ItemSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-autoIncrement.initialize(mongoose.connection);
-ItemSchema.plugin(autoIncrement.plugin, { model: 'Item', field: 'id', startAt: 1 });
+ItemSchema.plugin(autoIncrement.plugin, { model: 'Item', startAt: 1 });
 
 
 const Item = mongoose.model('Item', ItemSchema);
