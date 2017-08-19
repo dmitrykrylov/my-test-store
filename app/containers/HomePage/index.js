@@ -48,7 +48,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     return (
       <div>
         <Grid padded centered>
-          <Grid.Column width={4}>
+          <Grid.Column mobile={16} computer={4}>
             <Header>My app</Header>
             <CategoryList
               categories={categories}
@@ -57,7 +57,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
               openDeleteCategoryModal={this.props.openDeleteCategoryModal}
             />
           </Grid.Column>
-          <Grid.Column width={10}>
+          <Grid.Column mobile={16} computer={10}>
             <Button onClick={this.props.openNewItemModal}>
               Добавить товар
             </Button>
