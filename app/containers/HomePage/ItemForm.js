@@ -8,4 +8,3 @@ export default connect(
     initialValues: state.get('home').get('itemToEdit'),
   }),
 )(reduxForm({ form: 'ItemForm' })(ItemForm));
-

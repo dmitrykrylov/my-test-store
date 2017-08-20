@@ -43,7 +43,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
   }
 
   render() {
-    const { categories, items, itemToDelete, itemToEdit, categoryToDelete, activeCategory } = this.props;
+    const { categories, items, itemToDelete, categoryToDelete, activeCategory } = this.props;
 
     return (
       <div>
@@ -131,7 +131,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
         >
           <Header>Хотите удалить категорию?</Header>
           <Modal.Content>
-            Все товары этой категории будут помечены "Без категории"
+            {'Все товары этой категории будут помечены "Без категории"'}
           </Modal.Content>
           <Modal.Actions>
             <Button color="red" basic onClick={() => this.props.deleteCategory(categoryToDelete)}>
@@ -149,10 +149,20 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
 
 
 HomePage.propTypes = {
+  categories: PropTypes.array,
+  items: PropTypes.array,
+  itemToDelete: PropTypes.number,
+  categoryToDelete: PropTypes.string,
+  activeCategory: PropTypes.string,
   fetchItemList: PropTypes.func,
   createItem: PropTypes.func,
   updateItem: PropTypes.func,
   deleteItem: PropTypes.func,
+  newItemModalOpen: PropTypes.boolean,
+  newCategoryModalOpen: PropTypes.boolean,
+  itemModalOpen: PropTypes.boolean,
+  deleteItemModalOpen: PropTypes.boolean,
+  deleteCategoryModalOpen: PropTypes.boolean,
   fetchCategoryList: PropTypes.func,
   createCategory: PropTypes.func,
   deleteCategory: PropTypes.func,

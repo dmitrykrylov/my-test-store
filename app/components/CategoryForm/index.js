@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { Field } from 'redux-form/immutable';
 
+
 const CategoryForm = (props) => {
   const { handleSubmit } = props;
 
@@ -14,5 +15,11 @@ const CategoryForm = (props) => {
     </Form>
   );
 };
+
+
+CategoryForm.propTypes = {
+  handleSubmit: PropTypes.func,
+};
+
 
 export default CategoryForm;

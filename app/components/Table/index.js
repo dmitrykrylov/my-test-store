@@ -40,4 +40,11 @@ const ItemTable = (props) => {
   );
 };
 
+
+ItemTable.propTypes = {
+  items: PropTypes.array,
+  openDeleteItemModal: PropTypes.func,
+  openItemModal: PropTypes.func,
+};
+
 export default ItemTable;

@@ -1,19 +1,10 @@
 import React, { PropTypes } from 'react';
-import { Form, Button, Select } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 import { Field } from 'redux-form/immutable';
+import { Select } from '../ReduxFormInput';
 
 
-const renderSelectField = (props) => (
-  <Select
-    value={props.input.value}
-    options={props.options}
-    placeholder={props.placeholder}
-    onChange={(event, data) => props.input.onChange(data.value)}
-  />
-);
-
-
-const CategoryForm = (props) => {
+const ItemForm = (props) => {
   const { handleSubmit, categories } = props;
 
   return (
@@ -22,7 +13,7 @@ const CategoryForm = (props) => {
         <Field
           name="category"
           placeholder="Категория"
-          component={renderSelectField}
+          component={Select}
           options={categories.map((category) => ({
             key: category._id,
             value: category._id,
@@ -63,4 +54,11 @@ const CategoryForm = (props) => {
   );
 };
 
-export default CategoryForm;
+
+ItemForm.propTypes = {
+  handleSubmit: PropTypes.func,
+  categories: PropTypes.array,
+};
+
+
+export default ItemForm;

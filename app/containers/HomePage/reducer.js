@@ -1,4 +1,4 @@
-import { fromJS, List } from 'immutable';
+import { fromJS } from 'immutable';
 import {
   FETCH_ITEM_LIST_SUCCESS,
   FETCH_CATEGORY_LIST_SUCCESS,
